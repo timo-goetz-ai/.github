@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timo-goetz-ai — Platform Overview</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --border: #e1e4e8;
+      --text: #24292f;
+      --text-muted: #57606a;
+      --accent: #0969da;
+      --green: #1a7f37;
+      --green-bg: #dafbe1;
+      --yellow: #9a6700;
+      --yellow-bg: #fff8c5;
+      --gray: #57606a;
+      --gray-bg: #f6f8fa;
+      --red: #cf222e;
+      --red-bg: #ffebe9;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+
+    /* Header */
+    .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+    .header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #0969da, #8250df); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+    .header-title { font-size: 18px; font-weight: 600; }
+    .header-sub { font-size: 12px; color: var(--text-muted); }
+    .header-badges { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+    .badge-green { background: var(--green-bg); color: var(--green); }
+    .badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-gray { background: var(--gray-bg); color: var(--gray); border: 1px solid var(--border); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; display: grid; gap: 24px; }
+
+    /* Section headers */
+    .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+
+    /* Cards grid */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+
+    /* Project card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; transition: box-shadow .15s; }
+    .card:hover { box-shadow: var(--shadow); }
+    .card a { text-decoration: none; color: inherit; }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--accent); }
+    .card-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
+    .card-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .tag { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 11px; background: var(--gray-bg); color: var(--gray); border: 1px solid var(--border); }
+    .card-url { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+    /* Status bar */
+    .status-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+    .status-item { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot.live { background: #1a7f37; box-shadow: 0 0 0 3px #dafbe1; }
+    .status-dot.wip { background: #9a6700; box-shadow: 0 0 0 3px #fff8c5; }
+    .status-dot.planned { background: #d0d7de; }
+
+    /* Roadmap */
+    .roadmap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .roadmap-row { display: grid; grid-template-columns: 100px 1fr; border-bottom: 1px solid var(--border); }
+    .roadmap-row:last-child { border-bottom: none; }
+    .roadmap-phase { padding: 12px 16px; background: var(--gray-bg); font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; border-right: 1px solid var(--border); }
+    .roadmap-content { padding: 12px 16px; }
+    .roadmap-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .roadmap-detail { font-size: 12px; color: var(--text-muted); }
+    .icon { font-size: 14px; }
+
+    /* Milestones */
+    .milestone-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .milestone-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+    .milestone-row:last-child { border-bottom: none; }
+    .milestone-date { font-size: 11px; color: var(--text-muted); min-width: 70px; font-variant-numeric: tabular-nums; }
+    .milestone-text { font-size: 13px; flex: 1; }
+
+    /* Repos */
+    .repo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+    .repo-card:hover { border-color: var(--accent); }
+    .repo-name { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+    .repo-name a { text-decoration: none; color: inherit; }
+    .repo-desc { font-size: 12px; color: var(--text-muted); }
+
+    /* Infra */
+    .infra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+    .infra-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .infra-icon { font-size: 18px; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 8px; }
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .header { flex-wrap: wrap; }
+      .header-badges { margin-left: 0; }
+      .roadmap-row { grid-template-columns: 80px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-avatar">TG</div>
+  <div>
+    <div class="header-title">timo-goetz-ai</div>
+    <div class="header-sub">AI Engineering Platform · Hetzner + Vercel · Stand April 2026</div>
+  </div>
+  <div class="header-badges">
+    <span class="badge badge-green"><span class="dot"></span> 15 Apps live</span>
+    <span class="badge badge-yellow"><span class="dot"></span> Phase 1 aktiv</span>
+    <span class="badge badge-gray">6 Repos</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Status -->
+  <div>
+    <div class="section-title">Live-Status</div>
+    <div class="status-bar">
+      <div class="status-item"><div class="status-dot live"></div> <strong>public-site</strong> — timo-goetz-ai.de</div>
+      <div class="status-item"><div class="status-dot live"></div> <strong>control-center</strong> — agents.automation-plus-ki.de</div>
+      <div class="status-item"><div class="status-dot live"></div> <strong>admin-dashboard</strong> — admin.automation-plus-ki.de</div>
+      <div class="status-item"><div class="status-dot wip"></div> <strong>content-studio</strong> — in Entwicklung</div>
+      <div class="status-item"><div class="status-dot wip"></div> <strong>ops-dashboard</strong> — in Planung</div>
+      <div class="status-item"><div class="status-dot planned"></div> <strong>infra-dashboard</strong> — geplant</div>
+    </div>
+  </div>
+
+  <!-- Platform Split -->
+  <div>
+    <div class="section-title">Platform (4 Projekte)</div>
+    <div class="grid-2">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><a href="https://github.com/timo-goetz-ai/public-site" target="_blank">public-site</a></div>
+          <span class="badge badge-green"><span class="dot"></span> Live</span>
+        </div>
+        <div class="card-desc">Portfolio + Pricing Page. Statisch, kein Backend.</div>
+        <div class="card-meta">
+          <span class="tag">Astro 4</span>
+          <span class="tag">Vercel</span>
+          <span class="tag">Tailwind</span>
+        </div>
+        <div class="card-url">→ <a href="https://timo-goetz-ai.de" target="_blank">timo-goetz-ai.de</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><a href="https://github.com/timo-goetz-ai/content-studio" target="_blank">content-studio</a></div>
+          <span class="badge badge-yellow"><span class="dot"></span> Phase 1</span>
+        </div>
+        <div class="card-desc">SaaS für Content-Management. Supabase Auth + Stripe Billing.</div>
+        <div class="card-meta">
+          <span class="tag">Next.js 15</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Stripe</span>
+        </div>
+        <div class="card-url">→ app.timo-goetz-ai.de <em>(in Entwicklung)</em></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ops-dashboard</div>
+          <span class="badge badge-gray">Phase 3</span>
+        </div>
+        <div class="card-desc">Internes Operations-Dashboard. Aus Monolith extrahiert, verschlankt.</div>
+        <div class="card-meta">
+          <span class="tag">Next.js 15</span>
+          <span class="tag">Coolify</span>
+          <span class="tag">Authentik SSO</span>
+        </div>
+        <div class="card-url">→ ops.automation-plus-ki.de</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">infra-dashboard</div>
+          <span class="badge badge-gray">Phase 2</span>
+        </div>
+        <div class="card-desc">Infrastruktur-Monitoring. Grafana, Prometheus, Container-Status.</div>
+        <div class="card-meta">
+          <span class="tag">Next.js 15</span>
+          <span class="tag">Coolify</span>
+          <span class="tag">Grafana</span>
+        </div>
+        <div class="card-url">→ infra.automation-plus-ki.de</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Roadmap -->
+  <div>
+    <div class="section-title">Roadmap</div>
+    <div class="roadmap">
+      <div class="roadmap-row">
+        <div class="roadmap-phase"><span class="icon">✅</span> Phase 0</div>
+        <div class="roadmap-content">
+          <div class="roadmap-name">Supabase Foundation + Schema Migration</div>
+          <div class="roadmap-detail">NocoDB/Directus → Supabase PostgREST · abgeschlossen April 2026</div>
+        </div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-phase" style="background:#fff8c5;color:#9a6700"><span class="icon">🚧</span> Phase 1</div>
+        <div class="roadmap-content">
+          <div class="roadmap-name">content-studio UI + Vercel Deploy + DNS</div>
+          <div class="roadmap-detail">SaaS-Kandidat · app.timo-goetz-ai.de · Supabase Auth + Stripe</div>
+        </div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-phase"><span class="icon">⏳</span> Phase 2</div>
+        <div class="roadmap-content">
+          <div class="roadmap-name">infra-dashboard Monitoring-Pages</div>
+          <div class="roadmap-detail">Grafana + Prometheus Pages aus admin-dashboard extrahieren</div>
+        </div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-phase"><span class="icon">⏳</span> Phase 3</div>
+        <div class="roadmap-content">
+          <div class="roadmap-name">ops-dashboard verschlanken</div>
+          <div class="roadmap-detail">Rest des Monolithen aufräumen · NocoDB/Directus abschalten</div>
+        </div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-phase"><span class="icon">⏳</span> Phase 4</div>
+        <div class="roadmap-content">
+          <div class="roadmap-name">NocoDB/Directus dekommissionieren</div>
+          <div class="roadmap-detail">Vollständig auf Supabase migriert · Cleanup Coolify</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Milestones + Repos nebeneinander -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+
+    <div>
+      <div class="section-title">Abgeschlossen ✅</div>
+      <div class="milestone-list">
+        <div class="milestone-row">
+          <div class="milestone-date">Apr 2026</div>
+          <div class="milestone-text">GitHub Org Migration · 5 Repos in timo-goetz-ai</div>
+          <span class="badge badge-green" style="font-size:10px">done</span>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-date">Apr 2026</div>
+          <div class="milestone-text">Platform Split beschlossen · Monolith → 4 Projekte</div>
+          <span class="badge badge-green" style="font-size:10px">done</span>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-date">Apr 2026</div>
+          <div class="milestone-text">Control Center live (agents.automation-plus-ki.de)</div>
+          <span class="badge badge-green" style="font-size:10px">done</span>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-date">Mär 2026</div>
+          <div class="milestone-text">AppFlowy live · Bruno API Tests 92/92 grün</div>
+          <span class="badge badge-green" style="font-size:10px">done</span>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-date">Feb 2026</div>
+          <div class="milestone-text">15 Apps in Coolify migriert · Homestack deployed</div>
+          <span class="badge badge-green" style="font-size:10px">done</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Repos</div>
+      <div style="display:grid;gap:8px">
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/core-platform" target="_blank">core-platform</a></div><div class="repo-desc">Admin Dashboard (Next.js 14) + Python APIs</div></div>
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/control-center" target="_blank">control-center</a></div><div class="repo-desc">AI Agent Interface · Next.js 15 + FastAPI</div></div>
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/public-site" target="_blank">public-site</a></div><div class="repo-desc">Portfolio + Pricing · Astro 4 · Vercel</div></div>
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/content-studio" target="_blank">content-studio</a></div><div class="repo-desc">Content SaaS · Next.js 15 + Supabase</div></div>
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/smart-note-mcp" target="_blank">smart-note-mcp</a></div><div class="repo-desc">MCP Server · Smart Notes</div></div>
+        <div class="repo-card"><div class="repo-name"><a href="https://github.com/timo-goetz-ai/mcp-productivity-suite" target="_blank">mcp-productivity-suite</a></div><div class="repo-desc">MCP Server Suite</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Infrastruktur -->
+  <div>
+    <div class="section-title">Infrastruktur (Hetzner · 46.224.145.109)</div>
+    <div class="infra-grid">
+      <div class="infra-item"><span class="infra-icon">🚀</span><div><strong>Coolify</strong><br><span style="color:var(--text-muted);font-size:11px">15 Apps deployed</span></div></div>
+      <div class="infra-item"><span class="infra-icon">⚡</span><div><strong>n8n</strong><br><span style="color:var(--text-muted);font-size:11px">Automation Workflows</span></div></div>
+      <div class="infra-item"><span class="infra-icon">📊</span><div><strong>Grafana + Loki</strong><br><span style="color:var(--text-muted);font-size:11px">Monitoring + Logging</span></div></div>
+      <div class="infra-item"><span class="infra-icon">🗄️</span><div><strong>Supabase</strong><br><span style="color:var(--text-muted);font-size:11px">Postgres + Auth + Storage</span></div></div>
+      <div class="infra-item"><span class="infra-icon">🔐</span><div><strong>Authentik</strong><br><span style="color:var(--text-muted);font-size:11px">SSO für interne Services</span></div></div>
+      <div class="infra-item"><span class="infra-icon">🌐</span><div><strong>Vercel</strong><br><span style="color:var(--text-muted);font-size:11px">public-site + content-studio</span></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <a href="https://github.com/timo-goetz-ai" target="_blank">github.com/timo-goetz-ai</a> ·
+  <a href="https://timo-goetz-ai.de" target="_blank">timo-goetz-ai.de</a> ·
+  Deployed on Hetzner · CI/CD via GitHub Actions → Coolify
+</div>
+
+</body>
+</html>
