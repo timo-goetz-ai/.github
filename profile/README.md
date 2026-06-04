@@ -1,39 +1,37 @@
 # timo-goetz-ai — AI Engineering Platform
 
-> **Automation + KI** · Self-hosted · Hetzner + Vercel
+> **Automation + KI** · Self-hosted (Hetzner/Coolify) · Produkte auf Vercel wo sinnvoll
 
-[![Platform Overview](https://img.shields.io/badge/Platform_Overview-→_ansehen-0969da?style=for-the-badge&logo=github)](https://timo-goetz-ai.github.io/.github/)
-[![public-site](https://img.shields.io/website?url=https%3A%2F%2Ftimo-goetz-ai.de&label=public-site&style=flat-square)](https://timo-goetz-ai.de)
-[![CI control-center](https://github.com/timo-goetz-ai/control-center/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/timo-goetz-ai/control-center/actions)
-
----
-
-## Platform (April 2026)
-
-| Projekt | Status | Stack | URL |
-|---------|--------|-------|-----|
-| [public-site](https://github.com/timo-goetz-ai/public-site) | ✅ Live | Astro 4 · Vercel | [timo-goetz-ai.de](https://timo-goetz-ai.de) |
-| [content-studio](https://github.com/timo-goetz-ai/content-studio) | 🚧 Phase 1 | Next.js 15 · Supabase | app.timo-goetz-ai.de |
-| ops-dashboard | ⏳ Phase 3 | Next.js 15 · Coolify | ops.automation-plus-ki.de |
-| infra-dashboard | ⏳ Phase 2 | Next.js 15 · Coolify | infra.automation-plus-ki.de |
-
-## Roadmap
-
-```
-✅ Phase 0  — Supabase Foundation + Schema Migration
-🚧 Phase 1  — content-studio UI + Vercel Deploy
-⏳ Phase 2  — infra-dashboard Monitoring-Pages
-⏳ Phase 3  — ops-dashboard verschlanken
-⏳ Phase 4  — NocoDB/Directus dekommissionieren
-```
-
-## Repos
-
-[![core-platform](https://img.shields.io/badge/core--platform-Next.js%2014%20+%20Python-black?style=flat-square&logo=github)](https://github.com/timo-goetz-ai/core-platform)
-[![control-center](https://img.shields.io/badge/control--center-Next.js%2015%20+%20FastAPI-black?style=flat-square&logo=github)](https://github.com/timo-goetz-ai/control-center)
-[![public-site](https://img.shields.io/badge/public--site-Astro%204-black?style=flat-square&logo=github)](https://github.com/timo-goetz-ai/public-site)
-[![content-studio](https://img.shields.io/badge/content--studio-Next.js%2015%20+%20Supabase-black?style=flat-square&logo=github)](https://github.com/timo-goetz-ai/content-studio)
+[![Portfolio](https://img.shields.io/badge/portfolio-timo--goetz--ai.de-0969da?style=for-the-badge)](https://timo-goetz-ai.de)
+[![Control Center CI](https://github.com/timo-goetz-ai/control-center/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/timo-goetz-ai/control-center/actions)
 
 ---
 
-<sub>Hetzner · Coolify · GitHub Actions · Secrets in 1Password</sub>
+## Aktive Repos (Ist 2026-06)
+
+| Projekt | Repo | Status | URL |
+| --- | --- | --- | --- |
+| Portfolio | [`portfolio`](https://github.com/timo-goetz-ai/portfolio) | Live | [timo-goetz-ai.de](https://timo-goetz-ai.de) |
+| Content Studio | [`content-studio`](https://github.com/timo-goetz-ai/content-studio) | Phase 1 | [app.timo-goetz-ai.de](https://app.timo-goetz-ai.de) |
+| Control Center | [`control-center`](https://github.com/timo-goetz-ai/control-center) | Live | [agents.automation-plus-ki.de](https://agents.automation-plus-ki.de) |
+| Infra / VPS | [`infra-vps`](https://github.com/timo-goetz-ai/infra-vps) | Stacks | Tunnel → `/opt/stacks` |
+| Workspace (intern) | [`ai-workspace`](https://github.com/timo-goetz-ai/ai-workspace) | Dev | — |
+| Smart Note MCP | [`smart-note-mcp`](https://github.com/timo-goetz-ai/smart-note-mcp) | Tooling | Obsidian MCP + CLI |
+
+## Architektur (3 Säulen)
+
+```
+TimoGoetz1988/ai-data     → Governance & Wissen (Volume AI_DATA)
+timo-goetz-ai/ai-workspace → Produkt-Code
+timo-goetz-ai/infra-vps    → Betrieb (n8n, Qdrant, Hermes, SigNoz)
+```
+
+Abgelöst / archiviert: `apki-*`, `ai-agent-platform`, `analytic-dashboard`, `infra-code`, `public-site` / `core-platform` (Namen nur noch in alter Doku).
+
+## Governance auf der Platte
+
+Regeln, Salvage aus Legacy-Repos, Session-Hub: privates Meta-Repo **[TimoGoetz1988/ai-data](https://github.com/TimoGoetz1988/ai-data)** (nicht unter der Org).
+
+---
+
+<sub>Hetzner · Coolify · GitHub Actions · Secrets in 1Password · Org-Mapping: `REGISTRY/timo-goetz-ai-org-abgleich.md` im ai-data-Repo</sub>
